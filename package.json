@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-dll",
+  "version": "1.0.0",
+  "description": "bundle your nodejs application as a c compatible dll",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blocklessnetwork/nodejs-dll-ify.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blocklessnetwork/nodejs-dll-ify/issues"
+  },
+  "homepage": "https://github.com/blocklessnetwork/nodejs-dll-ify#readme",
+  "dependencies": {
+    "pkg": "^5.8.0"
+  }
+}
