@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "bundle your nodejs application as a c compatible dll",
   "main": "index.js",
+  "bin": {
+    "dllify": "bin.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/blocklessnetwork/nodejs-dll-ify#readme",
   "dependencies": {
+    "copy-dir": "^1.3.0",
     "pkg": "^5.8.0"
   }
 }

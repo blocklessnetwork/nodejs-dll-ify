@@ -22,7 +22,7 @@ import (
 	"github.com/zealic/go2node"
 )
 
-//go:embed build/nodeapp
+//go:embed nodeapp
 var bin []byte
 
 //export run
