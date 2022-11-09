@@ -8,8 +8,8 @@ technologies
 
 - pkg (node 18) from vercel https://github.com/vercel/pkg
 - node golang IPC from https://github.com/zealic/go2node
-- golang 1.18 using `embed`
-- python testing script
+- golang 1.18
+- python 3.9.12
 
 # usage
 

@@ -2,7 +2,7 @@ import ctypes
 import os
 from multiprocessing import Process
 
-lib = ctypes.CDLL("build/litsdk.so")
+lib = ctypes.CDLL("build/lib.so")
 
 # # define a call back for the library to call
 # def callback_example():
@@ -36,7 +36,7 @@ lib = ctypes.CDLL("build/litsdk.so")
 #    Process(target=other).start()
 
 
-s = "verifyJwt".encode("UTF-8")
+s = "MethodName".encode("UTF-8")
 lib.run.restype = ctypes.c_char_p
 lib.run.argtypes = [ctypes.c_char_p]
 lib.run(s)

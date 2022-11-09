@@ -31,7 +31,7 @@ async function buildLib() {
     `cd  ${path.resolve(
       tempPath,
       "go-wrapper"
-    )} && go build -buildmode=c-shared -o ../${targetPackageJson.name}.so`,
+    )} && go build -buildmode=c-shared -o ../lib.so`,
     {
       cwd: cwd,
     }
@@ -57,13 +57,33 @@ async function buildNodeApp() {
   ]);
 }
 
-async function main() {
+async function build() {
   await prepWrapper();
   console.log("building dllify module");
   await buildNodeApp();
   console.log("wrapping node app");
   await buildLib();
   await cleanUp();
+}
+
+async function executeTests() {
+  build();
+  fs.copyFileSync(
+    path.resolve(__dirname, "test.py"),
+    path.resolve(tempPath, "test.py")
+  );
+  child_process.execSync(`cd  ${path.resolve(tempPath)} && python test.py`, {
+    cwd: cwd,
+  });
+}
+
+async function main() {
+  const command = process.argv[2];
+  if (command === "build") {
+    build();
+  } else if (command === "test") {
+    executeTests();
+  }
 }
 
 main();
