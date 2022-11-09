@@ -2,7 +2,7 @@ import ctypes
 import os
 from multiprocessing import Process
 
-lib = ctypes.CDLL("build/lib.so")
+lib = ctypes.CDLL("./lib.so")
 
 # # define a call back for the library to call
 # def callback_example():

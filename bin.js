@@ -38,6 +38,18 @@ async function buildLib() {
   );
 }
 
+async function renameLib() {
+  fs.renameSync(
+    path.resolve(tempPath, "lib.so"),
+    path.resolve(tempPath, `${targetPackageJson.name}.so`)
+  );
+
+  fs.renameSync(
+    path.resolve(tempPath, "lib.h"),
+    path.resolve(tempPath, `${targetPackageJson.name}.h`)
+  );
+}
+
 async function cleanUp() {
   fs.rmSync(path.resolve(tempPath, "go-wrapper"), {
     recursive: true,
@@ -67,22 +79,24 @@ async function build() {
 }
 
 async function executeTests() {
-  build();
+  await build();
   fs.copyFileSync(
     path.resolve(__dirname, "test.py"),
     path.resolve(tempPath, "test.py")
   );
   child_process.execSync(`cd  ${path.resolve(tempPath)} && python test.py`, {
     cwd: cwd,
+    stdio: "inherit",
   });
 }
 
 async function main() {
   const command = process.argv[2];
   if (command === "build") {
-    build();
+    await build();
+    await renameLib();
   } else if (command === "test") {
-    executeTests();
+    await executeTests();
   }
 }
 

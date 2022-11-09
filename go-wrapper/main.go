@@ -70,11 +70,12 @@ func execute(method *C.char) {
 	})
 
 	// Golang will output: {"hello":"golang"}
+	fmt.Println("waitin for channel")
 	msg, err := channel.Read()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(msg.Message))
+	fmt.Println("Golang received:", string(msg.Message))
 
 	cmd.Process.Wait()
 }
