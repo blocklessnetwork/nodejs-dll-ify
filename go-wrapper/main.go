@@ -66,7 +66,7 @@ func execute(method *C.char) {
 
 	// Node will output: {hello: "node"}
 	channel.Write(&go2node.NodeMessage{
-		Message: []byte(`{"method": "` + sMethod + `"}`),
+		Message: []byte(`{"exec": "` + sMethod + `"}`),
 	})
 
 	// Golang will output: {"hello":"golang"}
