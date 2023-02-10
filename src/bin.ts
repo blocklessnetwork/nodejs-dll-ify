@@ -6,6 +6,7 @@ const cwd = process.cwd();
 const path = require("path");
 const copydir = require("copy-dir");
 const fs = require("fs");
+
 // for the build
 const targetPackage = path.resolve(cwd, "package.json");
 const targetPackageJson = require(targetPackage);
@@ -21,7 +22,7 @@ try {
 
 async function prepWrapper() {
   copydir.sync(
-    path.resolve(__dirname, "go-wrapper"),
+    path.resolve(__dirname, '..', "go-wrapper"),
     path.resolve(tempPath, "go-wrapper")
   );
 }
@@ -40,6 +41,11 @@ async function buildLib() {
 
 async function renameLib() {
   fs.renameSync(
+    path.resolve(tempPath, "nodeapp"),
+    path.resolve(tempPath, `${targetPackageJson.name}`)
+  );
+
+  fs.renameSync(
     path.resolve(tempPath, "lib.so"),
     path.resolve(tempPath, `${targetPackageJson.name}.so`)
   );
@@ -51,6 +57,7 @@ async function renameLib() {
 }
 
 async function cleanUp() {
+  fs.renameSync(path.resolve(tempPath, "go-wrapper", "nodeapp"), path.resolve(tempPath, "nodeapp"))
   fs.rmSync(path.resolve(tempPath, "go-wrapper"), {
     recursive: true,
     force: true,
