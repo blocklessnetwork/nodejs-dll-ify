@@ -29,7 +29,7 @@ try {
 catch (e) { }
 function prepWrapper() {
     return __awaiter(this, void 0, void 0, function* () {
-        copydir.sync(path.resolve(__dirname, '..', "go-wrapper"), path.resolve(tempPath, "go-wrapper"));
+        copydir.sync(path.resolve(__dirname, "..", "go-wrapper"), path.resolve(tempPath, "go-wrapper"));
     });
 }
 function buildLib() {
@@ -37,6 +37,11 @@ function buildLib() {
         child_process.execSync(`cd  ${path.resolve(tempPath, "go-wrapper")} && go build -buildmode=c-shared -o ../lib.so`, {
             cwd: cwd,
         });
+    });
+}
+function renameApp() {
+    return __awaiter(this, void 0, void 0, function* () {
+        fs.renameSync(path.resolve(tempPath, "nodeapp"), path.resolve(tempPath, `${targetPackageJson.name}`));
     });
 }
 function renameLib() {
@@ -55,7 +60,7 @@ function cleanUp() {
         });
     });
 }
-function buildNodeApp() {
+function buildNodeApp(path) {
     return __awaiter(this, void 0, void 0, function* () {
         yield pkg.exec([
             `${cwd}/${targetPackageJson.main}`,
@@ -64,18 +69,25 @@ function buildNodeApp() {
             "--target",
             "host",
             "--output",
-            path.resolve(tempPath, "go-wrapper", "nodeapp"),
+            path,
         ]);
     });
 }
 function build() {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("building cgi module");
+        yield buildNodeApp(path.resolve(tempPath, `${targetPackageJson.name}`));
+    });
+}
+function buildDll() {
+    return __awaiter(this, void 0, void 0, function* () {
         yield prepWrapper();
         console.log("building dllify module");
-        yield buildNodeApp();
+        yield buildNodeApp(path.resolve(tempPath, "go-wrapper", "nodeapp"));
         console.log("wrapping node app");
         yield buildLib();
         yield cleanUp();
+        yield renameLib();
     });
 }
 function executeTests() {
@@ -93,7 +105,6 @@ function main() {
         const command = process.argv[2];
         if (command === "build") {
             yield build();
-            yield renameLib();
         }
         else if (command === "test") {
             yield executeTests();

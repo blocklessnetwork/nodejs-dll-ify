@@ -7,7 +7,7 @@
     "dllify": "dist/bin.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist; tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
