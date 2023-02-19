@@ -10,10 +10,12 @@ declare const targetPackageJson: any;
 declare const tempPath: any;
 declare function prepWrapper(): Promise<void>;
 declare function buildLib(): Promise<void>;
+declare function renameApp(): Promise<void>;
 declare function renameLib(): Promise<void>;
 declare function cleanUp(): Promise<void>;
-declare function buildNodeApp(): Promise<void>;
+declare function buildNodeApp(path: string): Promise<void>;
 declare function build(): Promise<void>;
+declare function buildDll(): Promise<void>;
 declare function executeTests(): Promise<void>;
 declare function main(): Promise<void>;
 //# sourceMappingURL=bin.d.ts.map
