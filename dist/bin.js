@@ -67,7 +67,7 @@ function buildNodeApp(path) {
             "--compress",
             "GZip",
             "--target",
-            "host",
+            "node18-linux-arm64,node18-win-arm64,node18-macos-arm64,node18-macos-x64,node18-win-x64,node18-linux-x64",
             "--output",
             path,
         ]);
